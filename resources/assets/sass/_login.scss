@@ -1,0 +1,80 @@
+$choosenColor: black;
+
+.navbar-brand {
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+
+.login {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	flex-direction: column;
+
+	align-items: center;
+	justify-content: center;
+}
+
+.login-header {
+	color: rgba($choosenColor, 0.2);
+	font-size: 3rem;
+	font-weight: bold;
+	cursor: default;
+	user-select: none;
+}
+
+.login-form {
+	display: flex;
+	flex-direction: column;
+
+	input, button {
+		border: none;
+		background-color: rgba($choosenColor, 0.2);
+		color: rgba($choosenColor, 0.2);
+		margin: 5px;
+		padding: 5px;
+		font-weight: bold;
+		outline-color: rgba($choosenColor, 0.4);
+	}
+
+	input::-webkit-input-placeholder {
+		color: rgba($choosenColor, 0.2);
+		text-align: center;
+		font-weight: normal;
+	}
+
+	button {
+		cursor: pointer;
+	}
+}
+
+.forgot-password {
+	padding: 5px;
+	margin: 5px;
+	color: rgba($choosenColor, 0.2);
+	font-weight: bold;
+}
+
+.forgot-password:hover {
+	color: rgba($choosenColor, 0.2);
+}
+
+.error {
+	// border: 1px solid $red !important;
+	background-color: rgba($red, 0.2) !important;
+}
+
+.login-form-forgot {
+	display: none;
+}
+
+#sendReset:focus {
+  outline: none !important;
+}
+
+.ajax-status {
+	margin: 5px;
+	padding: 5px;
+	color: rgba($choosenColor, 0.2);
+}
