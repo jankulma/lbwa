@@ -115,7 +115,11 @@
 				if (confirm('Are you sure you want delete it?')) {
 					let vm = this;
 
-					axios.delete('/project/' + project.id)
+					axios.delete('/project/' + project.id, {
+						  params: {
+						    _method: 'delete'
+						  }
+						})
 						.then(function(response) {
 							console.log(response);
 							vm.projects.splice(key, 1);

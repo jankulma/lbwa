@@ -1,4 +1,4 @@
-<main id="projects" class="w-100 d-flex flex-column justify-content-center align-content-center">
+<main id="projects">
 
 	<projects></projects>
 

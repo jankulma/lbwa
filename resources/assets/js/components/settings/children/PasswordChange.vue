@@ -57,6 +57,7 @@
                         current_password: vm.currentPass,
                         new_password: vm.newPass,
                         new_password_confirmation: vm.newPassRepeat,
+                        _method: 'put'
                     }).then(function(response) {
                         vm.ongoingAjax = false;
                         vm.ajaxResult = response.data.message;

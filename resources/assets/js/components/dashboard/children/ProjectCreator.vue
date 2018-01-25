@@ -24,7 +24,7 @@
 						</div>
 						<div class="row">
 							<div class="form-group col">
-								<vue-editor id="editorPl" v-model="project.description_pl" :placeholder="'Opis'"></vue-editor>
+								<vue-editor id="editorPl" v-model="project.description_pl" :placeholder="'Opis'" maxlength="50"></vue-editor>
 							</div>
 						</div>
 					</form>

@@ -1,8 +1,8 @@
 @import "app";
 
 @font-face {
-    font-family: 'Raleway DN Medium';
-    src: url(./../fonts/RalewayDN-Medium.otf) format('opentype');
+    font-family: 'Raleway DN';
+    src: url(./../fonts/RalewayDN-Regular.otf) format('opentype');
 }
 
 html, body {
@@ -14,13 +14,15 @@ html, body {
 
 * {
 	font-size: 12px !important;
-	@include media-breakpoint-up(sm) { font-size: 14px !important; };
-	@include media-breakpoint-up(md) { font-size: 14px !important; };
-	@include media-breakpoint-up(lg) { font-size: 14px !important; };
-	@include media-breakpoint-up(xl) { font-size: 14px !important; };
-	font-family: Raleway DN Medium;
+	@include media-breakpoint-up(sm) { font-size: 13px !important; };
+	@include media-breakpoint-up(md) { font-size: 13px !important; };
+	@include media-breakpoint-up(lg) { font-size: 13px !important; };
+	@include media-breakpoint-up(xl) { font-size: 13px !important; };
+	font-family: Raleway DN;
 
-	overflow: hidden;
+	// overflow: hidden;
+	user-select: none;
+
 
 }
 
@@ -33,6 +35,13 @@ h1 {
 	font-size: 1rem;
 	margin-bottom: 0;
 	color: black;
+}
+
+a {
+	&:hover {
+
+		text-decoration: none;
+	}
 }
 
 header {
@@ -72,6 +81,7 @@ footer {
 }
 
 #home {
+	// height: calc(100% - 100px);
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -81,8 +91,7 @@ footer {
 
 	img {
 
-		max-height: calc(100% - 150px);
-
+		max-height: 60%;
 		max-width: 70%;
 		@include media-breakpoint-up(sm) { max-width: 60% };
 		@include media-breakpoint-up(md) { max-width: 50% };
@@ -93,27 +102,42 @@ footer {
 }
 
 #workshop {
+
+	.row {
+		margin: 50px 0;
+		padding: 1rem;
+		text-align: justify;
+		@include media-breakpoint-up(sm) { margin-top: 3rem };
+	}
+
 	div {
 		div {
 			p {
 				margin: 0;
+				a {
+					color: inherit;
+					text-decoration: none;
+				}
 			}
+
+
 		}
 	}
 }
 
 #projects {
 
-	padding-top: 52px;
+	padding-top: 41px;
 	padding-bottom: 42px;
 
-	@media screen and (max-height: 500px) {
+	@media screen and (max-height: 400px) {
 		padding-top: 0;
 		padding-bottom: 0;
 	}
 
 	width: 100%;
 	height: 100%;
+	// height: calc(100% - 90px);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -126,21 +150,25 @@ footer {
 		align-items: center;
 		justify-content: center;
 
+			padding: 1rem;
 		width: 100%;
-		max-width: 100%;
-		@include media-breakpoint-up(sm) { max-width: 90% };
-		@include media-breakpoint-up(md) { max-width: 80% };
-		@include media-breakpoint-up(lg) { max-width: 70% };
-		@include media-breakpoint-up(xl) { max-width: 60% };
+		// max-width: 100%;
+		// @include media-breakpoint-up(sm) { max-width: 90% };
+		// @include media-breakpoint-up(md) { max-width: 80% };
+		// @include media-breakpoint-up(lg) { max-width: 70% };
+		// @include media-breakpoint-up(xl) { max-width: 60% };
 
 		.projectHeader {
-			align-self: start;
+			// align-self: start;
 			display: flex;
 			align-items: flex-end;
 			width: 100%;
-			height: 40px;
-			padding: 1rem;
-
+			// height: 40px;
+				// max-width: calc((1800 / 1125) * 75vh);
+				// padding-bottom: 1rem;
+				// max-width: calc((1800 / 1125) * calc((1125 / 1800) * 100vw));
+				max-width: calc((1800 / 1125) * 60vh);
+				@include media-breakpoint-up(md) { max-width: calc((1800 / 1125) * 75vh) };
 
 			h2 {
 				flex: 1;
@@ -149,42 +177,57 @@ footer {
 			h2, .counter {
 				font-size: 1rem;
 				margin-bottom: 0;
-				line-height: 1;
+				// padding: 0.2rem 0;
+				line-height: 2;
 				
 			}
 		}
 
 		.img {
 
-			max-width: 100%;
-
-			height: calc(100% - 40px);
-
+			width: 100%;
+			height: 100%;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
 
+			img {
+				// all images are meant to be 1800 px width 1125 px height
+				// we want them always with the same height
+				// max-height: calc((1125 / 1800) * 100vw);
+				// @include media-breakpoint-up(md) { max-height: 75vh };
 
+				max-height: 60vh;
+				@include media-breakpoint-up(sm) { max-height: 75vh };
 
-				img {
+				max-width: calc(100% - 2rem);
+				// padding: 2rem 0;
+				// padding: 1rem;
 
-
-					max-height: calc(100vh - 125px);
-
-					@media screen and (max-height: 500px) {
-						max-height: calc(100vh - 100px);
-					}
-
-					max-width: 100%;
-				}
+				@media screen and (max-height: 400px) { margin: 2rem 0; }
+			}
 				
-
 			.projectDescription {
 				text-align: justify;
+				// padding: 0 1rem;
 
-				@include media-breakpoint-up(xs) { padding: 0 1rem; };
-				@include media-breakpoint-up(sm) { padding: 0; };
+				// description width equals to horizontal image width
+				// max-width: calc((1800 / 1125) * calc((1125 / 1800) * 100vw));
+				// @include media-breakpoint-up(md) { max-width: calc((1800 / 1125) * 75vh) };
+				width: calc((1800 / 1125) * 75vh);
+				max-width: calc(100% - 2rem);
+				max-height: 60vh;
+				@include media-breakpoint-up(sm) { max-height: 75vh };
+				@media screen and (max-height: 400px) { margin: 2rem 0; }
+
+				// max-width: calc(100% - 2rem);
+				overflow: scroll;
+				overflow-x: hidden;
+				@include media-breakpoint-up(sm) {
+					overflow: hidden;
+				};
+
 			}
 		}
 
@@ -192,6 +235,8 @@ footer {
 
 			@include media-breakpoint-up(xs) { display: none; };
 			@include media-breakpoint-up(sm) { display: block; };
+
+			// margin-top: 41px;
 
 			width: 100%;
 			height: calc(100% - 100px);
@@ -208,19 +253,20 @@ footer {
 			}
 
 			.top {
-				cursor: n-resize;
+				cursor: url('./../cursors/LBWA-kursor-gora.cur'), n-resize;
 			}
 
 			.left {
-				cursor: w-resize;
+				cursor: url('./../cursors/LBWA-kursor-lewo.cur'), w-resize;
+
 			}
 
 			.right {
-				cursor: e-resize;
+				cursor: url('./../cursors/LBWA-kursor-prawo.cur'), e-resize;
 			}
 
 			.bottom {
-				cursor: s-resize;
+				cursor: url('./../cursors/LBWA-kursor-dol.cur'), s-resize;
 			}
 		}
 	}
@@ -282,14 +328,19 @@ footer {
 .component-fade-right-enter-active,
 .component-fade-right-leave-active,
 .component-fade-left-enter-active,
-.component-fade-left-leave-active,
+.component-fade-left-leave-active {
+  transition: all 0.5s;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 .component-fade-up-enter-active,
 .component-fade-up-leave-active,
 .component-fade-down-enter-active,
 .component-fade-down-leave-active {
-  transition: all 1s;
-  overflow-x: hidden;
-  overflow-y: hidden;
+	transition: all 0.3s;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 .component-fade-right-enter,
@@ -300,23 +351,23 @@ footer {
 .component-fade-up-leave-active,
 .component-fade-down-enter,
 .component-fade-down-leave-active {
-  opacity: 0;
+  // opacity: 0;
   overflow-x: hidden;
   overflow-y: hidden;
 }
 
 .component-fade-right-enter {
-  transform: translateX(100%);
+  transform: translateX(100vw);
 }
 .component-fade-right-leave-active {
-  transform: translateX(-100%);
+  transform: translateX(-100vw);
 }
 
 .component-fade-left-enter {
-  transform: translateX(-100%);
+  transform: translateX(-100vw);
 }
 .component-fade-left-leave-active {
-  transform: translateX(100%);
+  transform: translateX(100vw);
 }
 
 .component-fade-up-enter {
@@ -332,3 +383,25 @@ footer {
 .component-fade-down-leave-active {
   transform: translateY(100%);
 }
+
+
+
+// .no-mode-translate-demo-wrapper {
+//   position: relative;
+//   height: 18px;
+// }
+// .no-mode-translate-demo-wrapper button {
+//   position: absolute;
+// }
+// .no-mode-translate-fade-enter-active, .no-mode-translate-fade-leave-active {
+//   transition: all 1s;
+// }
+// .no-mode-translate-fade-enter, .no-mode-translate-fade-leave-active {
+//   opacity: 0;
+// }
+// .no-mode-translate-fade-enter {
+//   transform: translateX(31px);
+// }
+// .no-mode-translate-fade-leave-active {
+//   transform: translateX(-31px);
+// }

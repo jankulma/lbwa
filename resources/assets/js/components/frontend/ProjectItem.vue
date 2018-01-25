@@ -1,3 +1,10 @@
+<style scoped>
+	img, p {
+		position: absolute;
+		/*overflow: hidden;*/
+	}
+</style>
+
 <template>
 
 	<div class="project">
@@ -13,12 +20,17 @@
 			<span class="counter">{{ currentImage + 1 }}/{{ imagesQuantity }}</span>
 		</div>
 
-		<div class="img" v-touch:swipe.right="previousPhoto" v-touch:swipe.left="nextPhoto" v-touch:swipe.up="nextProject" v-touch:swipe.bottom="previousProject">
-			<transition v-bind:name="transitionName" mode="out-in" tag="div">
+		<div class="img">
+			<transition
+				v-bind:name="transitionName"
+				tag="div"
+				v-on:before-leave="beforeLeave"
+				v-on:after-enter="afterEnter"
+				>
 
-				<img v-for="(image, index) in images" :src="getUrl(image)" :key="index" v-if="currentImage === index">
+				<img v-touch:swipe.right="previousPhoto" v-touch:swipe.left="nextPhoto" v-touch:swipe.up="nextProject" v-touch:swipe.bottom="previousProject" v-for="(image, index) in images" :src="getUrl(image)" :key="index" v-if="currentImage === index">
 
-				<p class="projectDescription" v-if="currentImage + 1 === imagesQuantity" v-html="description"></p>
+				<p v-touch:swipe.right="previousPhoto" v-touch:swipe.left="nextPhoto" class="projectDescription" v-if="currentImage + 1 === imagesQuantity" v-html="description"></p>
 
 			</transition>
 		</div>
@@ -28,16 +40,23 @@
 
 <script>
 	export default {
-		props: ['project', 'locale', 'baseUrl'],
+		props: ['project', 'locale', 'baseUrl', 'ongoingParentNavigation'],
 		
 		data() {
 			return {
 				currentImage: 0,
-				transitionName: ''
+				transitionName: '',
+				ongoingAnimation: false,
 			}
 		},
 
 		computed: {
+			blockNavigation() {
+				if (this.ongoingParentNavigation) return true;
+				if (this.ongoingAnimation) return true;
+				return false;
+			},
+
 			images() {
 				return JSON.parse(this.project.images);
 			},
@@ -87,10 +106,23 @@
 				}
 
 			});
+
+			window.addEventListener('wheel', function(event) {
+
+				if (event.deltaY < 0) {
+				    vm.previousProject();
+				}
+
+				if (event.deltaY > 0) {
+					vm.nextProject();
+				}
+
+			});
 		},
 
 		methods: {
 			previousPhoto() {
+				if (this.ongoingParentNavigation) return;
 				this.transitionName = 'component-fade-left';
 
 				if (this.currentImage > 0) {
@@ -101,6 +133,7 @@
 			},
 
 			nextPhoto() {
+				if (this.ongoingParentNavigation) return;
 				this.transitionName = 'component-fade-right';
 
 				if (this.currentImage < this.imagesQuantity -1) {
@@ -111,19 +144,25 @@
 			},
 
 			previousProject() {
+				if (this.blockNavigation) return;
 				this.$emit('previous');
 			},
 
 			nextProject() {
+				if (this.blockNavigation) return;
 				this.$emit('next');
+			},
+
+			beforeLeave() {
+				this.ongoingAnimation = true;
+			},
+
+			afterEnter() {
+				this.ongoingAnimation = false;
 			},
 
 			getUrl(image) {
 				return this.baseUrl + '/projects_files/' + image;
-			},
-
-			react() {
-				console.log('obj');
 			}
 		}
 	}

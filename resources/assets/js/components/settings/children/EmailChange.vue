@@ -54,6 +54,7 @@
                 axios.put('settings/updateEmail', {
                         password: vm.password,
                         new_email: vm.newEmail,
+                        _method: 'put'
                     }).then(function(response) {
                         vm.ongoingAjax = false;
                         vm.ajaxResult = response.data.message;
