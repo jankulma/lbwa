@@ -6,6 +6,6 @@
 
 return [
 	'projects' => 'PROJECTS',
-	'workshop' => 'WORKSHOP',
+	'workshop' => 'OFFICE',
 	'language' => 'POLSKI',
 ];
