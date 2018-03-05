@@ -42,8 +42,7 @@
 			return {
 				swiperOptions: {
 					speed: 1000,
-					spaceBetween: 50,
-					followFinger: false
+					spaceBetween: 50
 				},
 				currentImage: 0
 			}

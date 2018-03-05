@@ -53759,8 +53759,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		return {
 			swiperOptions: {
 				direction: 'vertical',
-				speed: 1000,
-				followFinger: false
+				speed: 1000
 			},
 			projects: [],
 			locale: '',
@@ -53878,8 +53877,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		return {
 			swiperOptions: {
 				speed: 1000,
-				spaceBetween: 50,
-				followFinger: false
+				spaceBetween: 50
 			},
 			currentImage: 0
 		};

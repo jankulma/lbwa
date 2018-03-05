@@ -185,10 +185,11 @@ footer {
 						text-align: justify;
 
 						// description width equals to horizontal image width
-						width: calc((1800 / 1125) * 75vh);
 						max-height: 60vh;
-						@include media-breakpoint-up(sm) { max-height: 75vh };
-						@media screen and (max-height: 400px) { margin: 2rem 0; }
+						@include media-breakpoint-up(sm) {
+							max-height: 75vh;
+							width: calc((1800 / 1125) * 75vh);
+						};
 
 						overflow: scroll;
 						overflow-x: hidden;
