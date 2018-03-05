@@ -24,8 +24,9 @@
 		data() {
 			return {
 				swiperOptions: {
-				  direction: 'vertical',
-				  speed: 1000
+					direction: 'vertical',
+					speed: 1000,
+					followFinger: false
 				},
 				projects: [],
 				locale: '',
