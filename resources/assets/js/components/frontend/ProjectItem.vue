@@ -1,10 +1,3 @@
-<style scoped>
-	img, p {
-		position: absolute;
-		/*overflow: hidden;*/
-	}
-</style>
-
 <template>
 
 	<div class="project">
@@ -20,41 +13,44 @@
 			<span class="counter">{{ currentImage + 1 }}/{{ imagesQuantity }}</span>
 		</div>
 
-		<div class="img">
-			<transition
-				v-bind:name="transitionName"
-				tag="div"
-				v-on:before-leave="beforeLeave"
-				v-on:after-enter="afterEnter"
-				>
+		<swiper :options="swiperOptions" @slideChange="slideChanged" ref="mySwiper">
+	        <swiper-slide v-for="(image, key) in images" :key="key">
+	        	<img class="imgInsideSwiper" :src="getUrl(image)">
+	        </swiper-slide>
+	        <swiper-slide>
+	        	<p class="projectDescription" v-html="description"></p>
+	        </swiper-slide>
+	    </swiper>
 
-				<img v-touch:swipe.right="previousPhoto" v-touch:swipe.left="nextPhoto" v-touch:swipe.up="nextProject" v-touch:swipe.bottom="previousProject" v-for="(image, index) in images" :src="getUrl(image)" :key="index" v-if="currentImage === index">
-
-				<p v-touch:swipe.right="previousPhoto" v-touch:swipe.left="nextPhoto" class="projectDescription" v-if="currentImage + 1 === imagesQuantity" v-html="description"></p>
-
-			</transition>
-		</div>
 	</div>
 
 </template>
 
 <script>
+	import 'swiper/dist/css/swiper.css';
+	import { swiper, swiperSlide } from 'vue-awesome-swiper';
+
 	export default {
-		props: ['project', 'locale', 'baseUrl', 'ongoingParentNavigation'],
+		components: {
+			swiper,
+		    swiperSlide
+		},
+
+		props: ['project', 'locale', 'baseUrl'],
 		
 		data() {
 			return {
-				currentImage: 0,
-				transitionName: '',
-				ongoingAnimation: false,
+				swiperOptions: {
+					speed: 1000,
+					spaceBetween: 50
+				},
+				currentImage: 0
 			}
 		},
 
 		computed: {
-			blockNavigation() {
-				if (this.ongoingParentNavigation) return true;
-				if (this.ongoingAnimation) return true;
-				return false;
+			swiper() {
+				return this.$refs.mySwiper.swiper
 			},
 
 			images() {
@@ -89,14 +85,6 @@
 
 			window.addEventListener('keyup', function(event) {
 
-				if (event.keyCode == 38) { 
-					vm.previousProject();
-				}
-
-				if (event.keyCode == 40) { 
-					vm.nextProject();
-				}
-
 				if (event.keyCode == 37) { 
 					vm.previousPhoto();
 				}
@@ -106,59 +94,27 @@
 				}
 
 			});
-
-			window.addEventListener('wheel', function(event) {
-
-				if (event.deltaY < 0) {
-				    vm.previousProject();
-				}
-
-				if (event.deltaY > 0) {
-					vm.nextProject();
-				}
-
-			});
 		},
 
 		methods: {
-			previousPhoto() {
-				if (this.ongoingParentNavigation) return;
-				this.transitionName = 'component-fade-left';
+			slideChanged() {
+				this.currentImage = this.swiper.activeIndex;
+			},
 
-				if (this.currentImage > 0) {
-					this.currentImage--;
-				} else {
-					this.currentImage = this.imagesQuantity - 1;
-				}
+			previousPhoto() {
+				this.swiper.slidePrev();
 			},
 
 			nextPhoto() {
-				if (this.ongoingParentNavigation) return;
-				this.transitionName = 'component-fade-right';
-
-				if (this.currentImage < this.imagesQuantity -1) {
-					this.currentImage++;
-				} else {
-					this.currentImage = 0;
-				}
+				this.swiper.slideNext();
 			},
 
 			previousProject() {
-				if (this.blockNavigation) return;
 				this.$emit('previous');
 			},
 
 			nextProject() {
-				if (this.blockNavigation) return;
 				this.$emit('next');
-			},
-
-			beforeLeave() {
-				this.ongoingAnimation = true;
-			},
-
-			afterEnter() {
-				this.ongoingAnimation = false;
 			},
 
 			getUrl(image) {

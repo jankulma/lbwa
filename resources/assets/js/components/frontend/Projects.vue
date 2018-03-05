@@ -1,41 +1,70 @@
-<style>
-	body {
-		overflow: hidden;
-	}
-</style>
-
 <template>
 
-	<transition
-		v-bind:name="transitionName"
-		mode="out-in"
-		v-on:before-leave="beforeLeave"
-		v-on:after-enter="afterEnter"
-		>
+	<swiper :options="swiperOptions" ref="projectsSwiper">
+        <swiper-slide v-for="(project, key) in projects" :key="key">
 
-		<project-item v-for="(project, index) in projects" v-if="index === currentProject" :project="project" :locale="locale" :baseUrl="baseUrl" :key="project.id" :ongoingParentNavigation="ongoingNavigation" v-on:previous="previousProject" v-on:next="nextProject"></project-item>
-
-	</transition>
+        	<project-item :project="project" :locale="locale" :baseUrl="baseUrl" v-on:previous="previousProject" v-on:next="nextProject"></project-item>
+        	
+        </swiper-slide>
+    </swiper>
 
 </template>
 
 <script>
 	import ProjectItem from './ProjectItem.vue';
+	import 'swiper/dist/css/swiper.css'
+	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 	export default {
+		components: {
+			swiper,
+		    swiperSlide
+		},
+
 		data() {
 			return {
+				swiperOptions: {
+				  direction: 'vertical',
+				  speed: 1000
+				},
 				projects: [],
 				locale: '',
 				baseUrl: '',
-				currentProject: 0,
-				transitionName: '',
-				ongoingNavigation: false,
+				currentProject: 0
 			}
 		},
 
 		created() {
 			this.getProjects();
+
+			window.addEventListener('keyup', event => {
+
+				if (event.keyCode == 38) { 
+					this.previousProject();
+				}
+
+				if (event.keyCode == 40) { 
+					this.nextProject();
+				}
+			});
+
+			window.addEventListener('wheel', event => {
+
+				if (event.deltaY < 0) {
+				    this.previousProject();
+				}
+
+				if (event.deltaY > 0) {
+					this.nextProject();
+				}
+
+			});
+		},
+
+		computed: {
+			swiper() {
+				return this.$refs.projectsSwiper.swiper
+			}
 		},
 
 		methods: {
@@ -54,36 +83,12 @@
 			},
 
 			previousProject() {
-				if (this.ongoingNavigation) return;
-				this.transitionName = 'component-fade-down';
-
-				if (0 === this.currentProject) {
-					this.currentProject = this.projects.length - 1;
-				} else {
-				 	this.currentProject--;
-				}
+				this.swiper.slidePrev();
 			},
 
 			nextProject() {
-				if (this.ongoingNavigation) return;
-				this.transitionName = 'component-fade-up';
-
-				if (this.projects.length - 1 === this.currentProject) {
-					this.currentProject = 0;
-				} else {
-					this.currentProject++;
-				}
-			},
-
-			beforeLeave() {
-				this.ongoingNavigation = true;
-			},
-
-			afterEnter() {
-				this.ongoingNavigation = false;
+				this.swiper.slideNext();
 			}
-
-
 		}
 	}
 </script>
